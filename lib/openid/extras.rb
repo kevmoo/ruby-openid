@@ -1,11 +1,12 @@
 class String
-  def starts_with?(other)
+  define_method :starts_with? do |other|
     head = self[0, other.length]
     head == other
-  end
+  end unless new.respond_to?(:starts_with?)
 
-  def ends_with?(other)
+  define_method :ends_with? do |other|
     tail = self[-1 * other.length, other.length]
     tail == other
-  end
+  end unless new.respond_to?(:ends_with?)
 end
+
