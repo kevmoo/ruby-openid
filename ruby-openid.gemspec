@@ -1,7 +1,7 @@
 require 'rubygems'
 
 SPEC = Gem::Specification.new do |s|
-  s.name = `cat admin/library-name`.strip
+  s.name = 'ruby-openid'
 #  s.version = `darcs changes --tags= | awk '$1 == "tagged" { print $2 }' | head -n 1`.strip
   s.version = '2.1.8'
   s.author = 'JanRain, Inc'
