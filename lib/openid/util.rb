@@ -71,20 +71,17 @@ module OpenID
       url << Util.urlencode(args)
     end
 
-    @@logger = Logger.new(STDERR)
-    @@logger.progname = "OpenID"
-
     def Util.logger=(logger)
       @@logger = logger
     end
 
     def Util.logger
-      @@logger
+      @@logger ||= Logger.new(STDERR, { :progname => 'OpenID' })
     end
 
     # change the message below to do whatever you like for logging
     def Util.log(message)
-      logger.info(message)
+      Util.logger.info(message)
     end
 
     def Util.auto_submit_html(form, title='OpenID transaction in progress')
