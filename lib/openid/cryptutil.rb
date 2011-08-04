@@ -1,8 +1,9 @@
 require "openid/util"
 require "digest/sha1"
 require "digest/sha2"
+require "openssl"
 begin
-  require "digest/hmac"
+  require "digest/hmac" unless OpenSSL.const_defined? :HMAC
 rescue LoadError
   begin
     # Try loading the ruby-hmac files if they exist
@@ -37,8 +38,10 @@ module OpenID
     end
 
     def CryptUtil.hmac_sha1(key, text)
-      if Digest.const_defined? :HMAC
-        Digest::HMAC.new(key,Digest::SHA1).update(text).digest
+      if OpenSSL.const_defined? :HMAC
+        OpenSSL::HMAC.new(key, OpenSSL::Digest.new('sha1')).update(text).digest
+      elsif Digest.const_defined? :HMAC
+        Digest::HMAC.new(key, Digest::SHA1).update(text).digest
       else
         return HMAC::SHA1.digest(key, text)
       end
@@ -49,8 +52,10 @@ module OpenID
     end
 
     def CryptUtil.hmac_sha256(key, text)
-      if Digest.const_defined? :HMAC
-        Digest::HMAC.new(key,Digest::SHA256).update(text).digest
+      if OpenSSL.const_defined? :HMAC
+        OpenSSL::HMAC.new(key, OpenSSL::Digest.new('sha256')).update(text).digest
+      elsif Digest.const_defined? :HMAC
+        Digest::HMAC.new(key, Digest::SHA256).update(text).digest
       else
         return HMAC::SHA256.digest(key, text)
       end
