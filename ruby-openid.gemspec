@@ -2,7 +2,7 @@ require 'rubygems'
 
 spec = Gem::Specification.new do |s|
   s.name = 'ruby-openid'
-  s.version = '2.1.8'
+  s.version = '2.1.8.1'
   s.author = 'JanRain, Inc'
   s.email = 'openid@janrain.com'
   s.homepage = 'http://github.com/openid/ruby-openid'

@@ -13,7 +13,7 @@
 # permissions and limitations under the License.
 
 module OpenID
-  VERSION = "2.1.8"
+  VERSION = "2.1.8.1"
 end
 
 require "openid/consumer"
