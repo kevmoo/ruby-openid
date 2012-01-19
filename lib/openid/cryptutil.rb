@@ -2,19 +2,6 @@ require "openid/util"
 require "digest/sha1"
 require "digest/sha2"
 require "openssl"
-begin
-  require "digest/hmac" unless OpenSSL.const_defined? :HMAC
-rescue LoadError
-  begin
-    # Try loading the ruby-hmac files if they exist
-    require "hmac-sha1"
-    require "hmac-sha2"
-  rescue LoadError
-    # Nothing exists use included hmac files
-    require "hmac/sha1"
-    require "hmac/sha2"
-  end
-end
 
 module OpenID
   # This module contains everything needed to perform low-level
