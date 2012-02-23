@@ -2,6 +2,10 @@
 
 A Ruby library for verifying and serving OpenID identities.
 
+This is a fork by courtenay @ entp (http://entp.com) which merges in many pull requests,
+fixes some tests and works on ruby 1.8.7 and ruby 1.9.2 (at least). This library seems
+otherwise abandoned by its authors.
+
 ==Features
 * Easy to use API for verifying OpenID identites - OpenID::Consumer
 * Support for serving OpenID identites - OpenID::Server
