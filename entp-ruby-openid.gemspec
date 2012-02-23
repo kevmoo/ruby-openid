@@ -3,12 +3,12 @@ require 'rubygems'
 SPEC = Gem::Specification.new do |s|
   s.name = `cat admin/library-name`.strip
 #  s.version = `darcs changes --tags= | awk '$1 == "tagged" { print $2 }' | head -n 1`.strip
-  s.version = '2.1.8'
-  s.author = 'JanRain, Inc'
-  s.email = 'openid@janrain.com'
-  s.homepage = 'http://github.com/openid/ruby-openid'
+  s.version = '2.2'
+  s.author = 'ENTP'
+  s.email = 'courtenay@entp.com'
+  s.homepage = 'http://github.com/entp/ruby-openid'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'A library for consuming and serving OpenID identities.'
+  s.summary = 'A library for consuming and serving OpenID identities. Forked from the unmaintained JanRain version.'
   files = Dir.glob("{examples,lib,test}/**/*")
   files << 'NOTICE' << 'CHANGELOG'
   s.files = files.delete_if {|f| f.include?('_darcs') || f.include?('admin')}
