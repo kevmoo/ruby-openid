@@ -46,7 +46,7 @@ module OpenID
                      unesc(pqu.call('=foo/bar?mi=fa&so=la', st)))
 
         # With no service endpoint selection.
-        args_esc = "_xrd_r=application%2Fxrds%2Bxml%3Bsep%3Dfalse"
+        args_esc = "_xrd_r=application%2Fxrds%2Bxml"
         assert_equal(unesc(h + '=foo?' + args_esc), unesc(pqu.call('=foo', nil)))
       end
 
