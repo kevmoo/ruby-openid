@@ -91,22 +91,23 @@ module OpenID
     end
 
     def Util.auto_submit_html(form, title='OpenID transaction in progress')
-      return "
-<html>
-<head>
-  <title>#{title}</title>
-</head>
-<body onload='document.forms[0].submit();'>
-#{form}
-<script>
-var elements = document.forms[0].elements;
-for (var i = 0; i < elements.length; i++) {
-  elements[i].style.display = \"none\";
-}
-</script>
-</body>
-</html>
-"
+      return "<html>
+                <head>
+                  <title>#{title}</title>
+                  <style>form { visibility: hidden }</style>
+                  <script>
+                    var server_proceed = setTimeout(function() {
+                      if (typeof document.forms[0] == 'object') {
+                        clearTimeout(server_proceed);
+                        document.forms[0].submit();
+                      }
+                    }, 100);
+                  </script>
+                </head>
+                <body>
+                  #{form}
+                </body>
+              </html>"
     end
 
     ESCAPE_TABLE = { '&' => '&amp;', '<' => '&lt;', '>' => '&gt;', '"' => '&quot;', "'" => '&#039;' }
