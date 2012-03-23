@@ -140,6 +140,16 @@ module OpenID
     def test_parse_query
       assert_equal({'foo'=>'bar'}, Util.parse_query('foo=bar'))
     end
+    
+    def test_defines_html_form_id
+      assert Util::HTML_FORM_ID
+    end
+
+    def test_auto_submit_html_looks_for_html_form_id_to_submit
+      auto_submit_html_output = Util.auto_submit_html('form_data')
+      assert auto_submit_html_output =~ Regexp.new(Regexp.escape("document.getElementById('#{Util::HTML_FORM_ID}')"))
+      assert auto_submit_html_output =~ Regexp.new(Regexp.escape("document.getElementById('#{Util::HTML_FORM_ID}').submit();"))
+    end
 
   end
 end

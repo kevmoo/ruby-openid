@@ -278,6 +278,7 @@ module OpenID
       form_tag_attr_map['method'] = 'post'
       form_tag_attr_map['accept-charset'] = 'UTF-8'
       form_tag_attr_map['enctype'] = 'application/x-www-form-urlencoded'
+      form_tag_attr_map['id'] = OpenID::Util::HTML_FORM_ID
 
       markup = "<form "
 

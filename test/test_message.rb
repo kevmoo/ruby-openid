@@ -918,6 +918,7 @@ module OpenID
         'accept-charset' => 'UTF-8',
         'enctype' => 'application/x-www-form-urlencoded',
         'method' => 'post',
+        'id' => Util::HTML_FORM_ID
       }
     end
 

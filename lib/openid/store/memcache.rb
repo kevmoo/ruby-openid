@@ -21,7 +21,7 @@ module OpenID
         serialized = serialize(association)
         [nil, association.handle].each do |handle|
           key = assoc_key(server_url, handle)
-          @cache_client.write(key, serialized, :expires_in => association.lifetime.seconds.to_i)
+          @cache_client.set(key, serialized, expiry(association.lifetime))
         end
       end
 
@@ -30,7 +30,7 @@ module OpenID
       # the one matching association is expired. (Is allowed to GC expired
       # associations when found.)
       def get_association(server_url, handle=nil)
-        serialized = @cache_client.read(assoc_key(server_url, handle))
+        serialized = @cache_client.get(assoc_key(server_url, handle))
         if serialized
           return deserialize(serialized)
         else
@@ -62,9 +62,12 @@ module OpenID
         return false if (timestamp - Time.now.to_i).abs > Nonce.skew
         ts = timestamp.to_s # base 10 seconds since epoch
         nonce_key = key_prefix + 'N' + server_url + '|' + ts + '|' + salt
-        result = @cache_client.read(nonce_key)
-        @cache_client.write(nonce_key, nonce_key, :expires_in => (Nonce.skew() + 5))
-        result.nil?
+        result = @cache_client.add(nonce_key, '', expiry(Nonce.skew + 5))
+        if result.is_a? String
+          return !!(result =~ /^STORED/)
+        else
+          return result == true
+        end
       end
 
       def assoc_key(server_url, assoc_handle=nil)
@@ -87,9 +90,12 @@ module OpenID
       protected
 
       def delete(key)
-        # result = @cache_client.delete(key) # memcached delete seems to be broken 
-        # return !!(result =~ /^DELETED/)
-        @cache_client.write(key, nil, :expires_in => 0)
+        result = @cache_client.delete(key)
+        if result.is_a? String
+          return !!(result =~ /^DELETED/)
+        else
+          return result == true
+        end
       end
 
       def serialize(assoc)
