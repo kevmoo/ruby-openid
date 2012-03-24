@@ -1,5 +1,5 @@
-require 'rubygems'
-require 'lib/openid/version'
+$:.push File.expand_path("../lib", __FILE__)
+require 'openid/version'
 
 spec = Gem::Specification.new do |s|
   s.name = 'ruby-openid'
