@@ -12,10 +12,6 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-module OpenID
-  VERSION = "2.1.9.3"
-end
-
 require "openid/version"
 require 'openid/store'
 require 'openid/yadis'
