@@ -1,8 +1,9 @@
 require 'rubygems'
+require 'lib/openid/version'
 
 spec = Gem::Specification.new do |s|
   s.name = 'ruby-openid'
-  s.version = '2.1.9.3'
+  s.version = OpenID::VERSION
   s.author = 'JanRain, Inc'
   s.email = 'openid@janrain.com'
   s.homepage = 'http://github.com/openid/ruby-openid'
