@@ -1,5 +1,5 @@
 require 'net/http'
-require 'openid'
+require 'openid/version'
 require 'openid/util'
 
 begin

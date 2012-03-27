@@ -14,6 +14,5 @@
 
 require "openid/version"
 require 'openid/store'
-require 'openid/yadis'
 require "openid/consumer"
 require 'openid/server'
