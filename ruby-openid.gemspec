@@ -15,4 +15,7 @@ spec = Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.autorequire = 'openid'
   s.test_file = 'admin/runtests.rb'
+  
+  s.add_development_dependency("rake")
+  s.add_development_dependency("test-unit")
 end
