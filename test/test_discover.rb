@@ -529,7 +529,7 @@ module OpenID
       end
 
       begin
-        ctype, body = @documents.fetch(xri)
+        ctype, body = @documents.fetch(URI::unescape(xri))
       rescue IndexError
         status = 404
         ctype = 'text/plain'
@@ -548,19 +548,21 @@ module OpenID
     include TestDataMixin
     include TestUtil
 
+    TEST_INAME = "=smoker"
+
     def initialize(*args)
       super(*args)
 
       @fetcher_class = MockFetcherForXRIProxy
 
-      @documents = {'=smoker' => ['application/xrds+xml',
+      @documents = {TEST_INAME => ['application/xrds+xml',
                                   read_data_file('test_discover/yadis_2entries_delegate.xml', false)],
-        '=smoker*bad' => ['application/xrds+xml',
+        "#{TEST_INAME}*bad" => ['application/xrds+xml',
                           read_data_file('test_discover/yadis_another_delegate.xml', false)]}
     end
 
     def test_xri
-      user_xri, services = OpenID.discover_xri('=smoker')
+      user_xri, services = OpenID.discover_xri(TEST_INAME)
 
       _checkService(services[0],
                     "http://www.myopenid.com/server",
@@ -569,7 +571,7 @@ module OpenID
                     Yadis::XRI.make_xri("=!1000"),
                     ['1.0'],
                     true,
-                    '=smoker')
+                    TEST_INAME)
 
       _checkService(services[1],
                     "http://www.livejournal.com/openid/server.bml",
@@ -578,11 +580,11 @@ module OpenID
                     Yadis::XRI.make_xri("=!1000"),
                     ['1.0'],
                     true,
-                    '=smoker')
+                    TEST_INAME)
     end
 
     def test_xri_normalize
-      user_xri, services = OpenID.discover_xri('xri://=smoker')
+      user_xri, services = OpenID.discover_xri("xri://#{TEST_INAME}")
 
       _checkService(services[0],
                     "http://www.myopenid.com/server",
@@ -591,7 +593,7 @@ module OpenID
                     Yadis::XRI.make_xri("=!1000"),
                     ['1.0'],
                     true,
-                    '=smoker')
+                    TEST_INAME)
 
       _checkService(services[1],
                     "http://www.livejournal.com/openid/server.bml",
@@ -600,12 +602,12 @@ module OpenID
                     Yadis::XRI.make_xri("=!1000"),
                     ['1.0'],
                     true,
-                    '=smoker')
+                    TEST_INAME)
     end
 
     def test_xriNoCanonicalID
       silence_logging {
-        user_xri, services = OpenID.discover_xri('=smoker*bad')
+        user_xri, services = OpenID.discover_xri("#{TEST_INAME}*bad")
         assert(services.empty?)
       }
     end
@@ -623,17 +625,19 @@ module OpenID
   class TestXRIDiscoveryIDP < BaseTestDiscovery
     include TestDataMixin
 
+    TEST_INAME = "=smoker"
+
     def initialize(*args)
       super(*args)
 
       @fetcher_class = MockFetcherForXRIProxy
 
-      @documents = {'=smoker' => ['application/xrds+xml',
+      @documents = {TEST_INAME => ['application/xrds+xml',
                                   read_data_file('test_discover/yadis_2entries_idp.xml', false)] }
     end
 
     def test_xri
-      user_xri, services = OpenID.discover_xri('=smoker')
+      user_xri, services = OpenID.discover_xri(TEST_INAME)
       assert(!services.empty?, "Expected services, got zero")
       assert_equal(services[0].server_url,
                    "http://www.livejournal.com/openid/server.bml")
