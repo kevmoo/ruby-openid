@@ -11,7 +11,7 @@ class TrustRootTest < Test::Unit::TestCase
       assert(tr.sane?)
       assert(OpenID::TrustRoot::TrustRoot.check_sanity(case_))
     elsif sanity == 'insane'
-      assert(!tr.sane?)
+      assert(!tr || !tr.sane?)
       assert(!OpenID::TrustRoot::TrustRoot.check_sanity(case_))
     else
       assert(tr.nil?, case_)
