@@ -1,3 +1,3 @@
 module OpenID
-  VERSION = "2.1.9.5"
+  VERSION = "2.1.9.6"
 end
