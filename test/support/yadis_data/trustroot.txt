@@ -3,7 +3,7 @@ Trust root parsing checking
 ========================================
 
 ----------------------------------------
-23: Does not parse
+21: Does not parse
 ----------------------------------------
 baz.org
 *.foo.com
@@ -16,8 +16,6 @@ http://foo.*.com
 http://www.*
 http://*foo.com/
 http://foo.com/invalid#fragment
-http://..it/
-http://.it/
 http://*:8081/
 http://*:80
 http://localhost:1900foo/
@@ -30,7 +28,7 @@ http://lambda.com/Λ
 5
 
 ----------------------------------------
-14: Insane
+16: Insane
 ----------------------------------------
 http:///
 http://*/
@@ -46,6 +44,8 @@ http://*.museum/
 https://*.museum/
 http://www.schtuffcom/
 http://it/
+http://..it/
+http://.it/
 
 ----------------------------------------
 18: Sane
